@@ -3,18 +3,18 @@
 # 13/11/2021
 
 import socket
+import threading
+import json
 import pygame
-import ChessLogic
 
 HEADER = 4
 FORMAT = "utf-8"
 PORT = 5050
-SERVER = "194.207.138.25"
+SERVER = "192.168.1.101"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
-
 
 WIDTH = 800
 HEIGHT = 800
@@ -22,9 +22,13 @@ SQUARE_SIZE = HEIGHT // 8
 FPS = 30
 IMAGES = {}
 
+turn = None
+board = []
+
 
 def main():
     pygame.init()
+    
     SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
     CLOCK = pygame.time.Clock()
     SCREEN.fill((255, 255, 255))
@@ -50,9 +54,6 @@ def main():
                     send(str(rStart) + str(cStart) + str(rEnd) + str(cEnd))
                 firstClick = not firstClick
 
-        global board
-        with open("board.txt", "r") as file:
-            board = [line.split() for line in file]
         updateBoard(SCREEN)
         CLOCK.tick(FPS)
         pygame.display.flip()
@@ -89,5 +90,14 @@ def send(msg):
     client.send(msg.encode(FORMAT))
 
 
+def recieve_board():
+    global board
+    while True:
+        msg = client.recv(400).decode(FORMAT)
+        board = json.loads(msg)
+
+
 if __name__ == "__main__":
+    thread = threading.Thread(target=recieve_board)
+    thread.start()
     main()

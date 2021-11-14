@@ -4,8 +4,8 @@
 
 import socket
 import threading
-import shutil
 import os
+import json
 import ChessLogic
 
 print("[SEVER] Server is starting...")
@@ -25,15 +25,17 @@ connections = []
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
     connections.append(conn)
+    conn.send(json.dumps(ChessLogic.board).encode(FORMAT))
     while True:
         try:
             msg = conn.recv(HEADER).decode(FORMAT)
-            ChessLogic.move(msg)
+            board = ChessLogic.move(msg).encode(FORMAT)
+            for conn in connections:
+                conn.send(board)
         except ConnectionResetError:
             print(f"[{addr}] Disconnected")
             break
     connections.remove(conn)
-    shutil.copy("startboard.txt", "board.txt")
     conn.close()
 
 

@@ -2,14 +2,11 @@
 # Aleksis Vanags
 # 13/11/2021
 
-with open("startboard.txt", "r") as file:
-    board = [line.split() for line in file]
+import json
+
+board = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"], ["bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"], ["--", "--", "--", "--", "--", "--", "--", "--"], ["--", "--", "--", "--", "--", "--", "--", "--"], ["--", "--", "--", "--", "--", "--", "--", "--"], ["--", "--", "--", "--", "--", "--", "--", "--"], ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"], ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"]]
 legalMoves = []
 turn = True
-
-
-def updateBoard():
-    return board
 
 
 def move(userMove):
@@ -20,14 +17,10 @@ def move(userMove):
     if "".join(str(i) for i in userMove) in legalMoves:
         board[userMove[2]][userMove[3]] = board[userMove[0]][userMove[1]]
         board[userMove[0]][userMove[1]] = "--"
-        with open("board.txt", "w") as file:
-            for r in range(8):
-                for c in range(8):
-                    file.write(f"{board[r][c]} ")
-                if r != 7:
-                    file.write("\n")
         legalMoves.clear()
         turn = not turn
+    return json.dumps(board)
+
 
 def checkLegalMoves():
     for r in range(0, 8):
@@ -223,3 +216,4 @@ def checkProtected(r, c, color):
     # Pawn Check
     # Knight Check
     # King Check
+

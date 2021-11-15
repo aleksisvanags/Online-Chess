@@ -7,18 +7,17 @@ import threading
 import json
 import pygame
 
-HEADER = 4
 FORMAT = "utf-8"
 PORT = 5050
 #Change this to the Server IP
-SERVER = "11.9.12.36"
+SERVER = "192.168.1.101"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
-WIDTH = 800
-HEIGHT = 800
+WIDTH = 400
+HEIGHT = 400
 SQUARE_SIZE = HEIGHT // 8
 FPS = 30
 IMAGES = {}
@@ -51,7 +50,8 @@ def main():
                 else:
                     cEnd = location[0] // SQUARE_SIZE
                     rEnd = location[1] // SQUARE_SIZE
-                    send(str(rStart) + str(cStart) + str(rEnd) + str(cEnd))
+                    MESSAGE = [rStart, cStart, rEnd, cEnd]
+                    send(json.dumps(MESSAGE))
                 firstClick = not firstClick
 
         updateBoard(SCREEN)
@@ -82,7 +82,7 @@ def drawPieces(screen):
     for r in range(8):
         for c in range(8):
             piece = board[r][c]
-            if piece != "--":
+            if piece != "-":
                 screen.blit(IMAGES[piece], pygame.Rect(c * SQUARE_SIZE, r * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
 
@@ -91,9 +91,9 @@ def send(msg):
 
 
 def recieve_board():
-    global board
     while True:
-        msg = client.recv(400).decode(FORMAT)
+        global board
+        msg = client.recv(368).decode(FORMAT)
         board = json.loads(msg)
 
 

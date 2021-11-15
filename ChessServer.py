@@ -10,7 +10,7 @@ import ChessLogic
 
 print("[SEVER] Server is starting...")
     
-HEADER = 4
+HEADER = 12
 FORMAT = "utf-8"
 PORT = 5050
 SERVER = socket.gethostbyname(socket.gethostname())
@@ -29,12 +29,17 @@ def handle_client(conn, addr):
     while True:
         try:
             msg = conn.recv(HEADER).decode(FORMAT)
-            board = ChessLogic.move(msg).encode(FORMAT)
-            for conn in connections:
-                conn.send(board)
+            print(msg)
+            board = ChessLogic.move(msg)
+            if board != None:
+                board = board.encode(FORMAT)
+                for conn in connections:
+                    conn.send(board)
         except ConnectionResetError:
             print(f"[{addr}] Disconnected")
             break
+        except Exception as e:
+            print(f"oh, this is weird\n{e}")
     for conn in connections:
         conn.close()
         connections.remove(conn)

@@ -6,10 +6,10 @@ import json
 
 board = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
          ["bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"],
-         ["--", "--", "--", "--", "--", "--", "--", "--"],
-         ["--", "--", "--", "--", "--", "--", "--", "--"],
-         ["--", "--", "--", "--", "--", "--", "--", "--"],
-         ["--", "--", "--", "--", "--", "--", "--", "--"],
+         ["-", "-", "-", "-", "-", "-", "-", "-"],
+         ["-", "-", "-", "-", "-", "-", "-", "-"],
+         ["-", "-", "-", "-", "-", "-", "-", "-"],
+         ["-", "-", "-", "-", "-", "-", "-", "-"],
          ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"],
          ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"]]
 legalMoves = []
@@ -20,19 +20,19 @@ def move(userMove):
     global turn
     global board
     checkLegalMoves()
-    userMove = [int(x) for x in userMove]
+    userMove = json.loads(userMove)
     if "".join(str(i) for i in userMove) in legalMoves:
         board[userMove[2]][userMove[3]] = board[userMove[0]][userMove[1]]
-        board[userMove[0]][userMove[1]] = "--"
+        board[userMove[0]][userMove[1]] = "-"
         legalMoves.clear()
         turn = not turn
-    return json.dumps(board)
+        return json.dumps(board)
 
 
 def checkLegalMoves():
     for r in range(0, 8):
         for c in range(0, 8):
-            if board[r][c] == "--":
+            if board[r][c] == "-":
                 pass
             elif board[r][c][0] == "w" and turn:
                 if board[r][c][1] == "P":
@@ -66,10 +66,10 @@ def checkLegalMoves():
 def checkPawn(r, c, color):
     if color == "w":
         if r == 6:
-            if board[r - 2][c] == "--" and board[r - 1][c] == "--":
+            if board[r - 2][c] == "-" and board[r - 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r - 2}{c}")
         if r - 1 >= 0:
-            if board[r - 1][c] == "--":
+            if board[r - 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r - 1}{c}")
             if c - 1 >= 0 and board[r - 1][c - 1][0] == "b":
                 legalMoves.append(f"{r}{c}{r - 1}{c - 1}")
@@ -77,10 +77,10 @@ def checkPawn(r, c, color):
                 legalMoves.append(f"{r}{c}{r - 1}{c + 1}")
     if color == "b":
         if r == 1:
-            if board[r + 2][c] == "--" and board[r + 1][c] == "--":
+            if board[r + 2][c] == "-" and board[r + 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r + 2}{c}")
         if r + 1 <= 7:
-            if board[r + 1][c] == "--":
+            if board[r + 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r + 1}{c}")
             if c - 1 >= 0 and board[r + 1][c - 1][0] == "w":
                 legalMoves.append(f"{r}{c}{r + 1}{c - 1}")
@@ -95,7 +95,7 @@ def checkRook(r, c, color):
         row -= 1
         if board[row][c][0] != color:
             legalMoves.append(f"{r}{c}{row}{c}")
-            if board[row][c] != "--":
+            if board[row][c] != "-":
                 break
         else:
             break
@@ -104,7 +104,7 @@ def checkRook(r, c, color):
         row += 1
         if board[row][c][0] != color:
             legalMoves.append(f"{r}{c}{row}{c}")
-            if board[row][c] != "--":
+            if board[row][c] != "-":
                 break
         else:
             break
@@ -113,7 +113,7 @@ def checkRook(r, c, color):
         col -= 1
         if board[r][col][0] != color:
             legalMoves.append(f"{r}{c}{r}{col}")
-            if board[r][col] != "--":
+            if board[r][col] != "-":
                 break
         else:
             break
@@ -122,7 +122,7 @@ def checkRook(r, c, color):
         col += 1
         if board[r][col][0] != color:
             legalMoves.append(f"{r}{c}{r}{col}")
-            if board[r][col] != "--":
+            if board[r][col] != "-":
                 break
         else:
             break
@@ -136,7 +136,7 @@ def checkBishop(r, c, color):
         col -= 1
         if board[row][col][0] != color:
             legalMoves.append(f"{r}{c}{row}{col}")
-            if board[row][col] != "--":
+            if board[row][col] != "-":
                 break
         else:
             break
@@ -147,7 +147,7 @@ def checkBishop(r, c, color):
         col += 1
         if board[row][col][0] != color:
             legalMoves.append(f"{r}{c}{row}{col}")
-            if board[row][col] != "--":
+            if board[row][col] != "-":
                 break
         else:
             break
@@ -158,7 +158,7 @@ def checkBishop(r, c, color):
         col -= 1
         if board[row][col][0] != color:
             legalMoves.append(f"{r}{c}{row}{col}")
-            if board[row][col] != "--":
+            if board[row][col] != "-":
                 break
         else:
             break
@@ -169,7 +169,7 @@ def checkBishop(r, c, color):
         col += 1
         if board[row][col][0] != color:
             legalMoves.append(f"{r}{c}{row}{col}")
-            if board[row][col] != "--":
+            if board[row][col] != "-":
                 break
         else:
             break

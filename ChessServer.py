@@ -31,7 +31,7 @@ def handle_client(conn, addr):
             msg = conn.recv(HEADER).decode(FORMAT)
             print(msg)
             board = ChessLogic.move(msg)
-            if board != None:
+            if board is not None:
                 board = board.encode(FORMAT)
                 for conn in connections:
                     conn.send(board)

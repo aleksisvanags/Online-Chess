@@ -10,7 +10,8 @@ import pygame
 HEADER = 4
 FORMAT = "utf-8"
 PORT = 5050
-SERVER = "192.168.1.101"
+#Change this to the Server IP
+SERVER = "11.9.12.36"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,7 +23,6 @@ SQUARE_SIZE = HEIGHT // 8
 FPS = 30
 IMAGES = {}
 
-turn = None
 board = []
 
 

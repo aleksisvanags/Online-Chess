@@ -31,7 +31,7 @@ def move(userMove):
         board[userMove[0]][userMove[1]] = "-"
         legalMoves.clear()
         turn = not turn
-        return json.dumps(board)
+    return json.dumps(board)
 
 
 def checkLegalMoves():

@@ -25,8 +25,8 @@ connections = []
 def handle_client(conn, addr):
     """
     This function recieves and interprets incoming messages.
-    :param: conn : connection name
-    :param: addr : connection address
+    :param: conn : connection name.
+    :param: addr : connection address.
     :return: None
     """
     print(f"[NEW CONNECTION] {addr} connected.")

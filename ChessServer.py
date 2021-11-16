@@ -44,7 +44,7 @@ def handle_client(conn, addr):
             break
     for connection in connections:
         connection.close()
-        connections.remove(conn)
+        connections.remove(connection)
 
 
 def start():

@@ -7,8 +7,9 @@ import threading
 import os
 import json
 import ChessLogic
+import ChessCommonVariables
 
-print("[SEVER] Server is starting...")
+print("[SERVER] Server is starting...")
 
 HEADER = 12
 FORMAT = "utf-8"
@@ -27,16 +28,17 @@ def handle_client(conn, addr):
     This function recieves and interprets incoming messages.
     :param: conn : connection name.
     :param: addr : connection address.
+    :param: board : This is the game board.
     :return: None
     """
     print(f"[NEW CONNECTION] {addr} connected.")
     connections.append(conn)
-    conn.send(json.dumps(ChessLogic.board).encode(FORMAT))
+    conn.send(json.dumps(ChessCommonVariables.BOARD).encode(FORMAT))
     while True:
         try:
             msg = conn.recv(HEADER).decode(FORMAT)
-            board = ChessLogic.move(msg)
-            board = board.encode(FORMAT)
+            ChessLogic.move(msg)
+            board = json.dumps(ChessCommonVariables.BOARD).encode(FORMAT)
             for connection in connections:
                 connection.send(board)
         except ConnectionResetError:

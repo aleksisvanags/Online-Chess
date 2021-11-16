@@ -3,35 +3,24 @@
 # 13/11/2021
 
 import json
+import ChessCommonVariables
 
-board = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
-         ["bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"],
-         ["-", "-", "-", "-", "-", "-", "-", "-"],
-         ["-", "-", "-", "-", "-", "-", "-", "-"],
-         ["-", "-", "-", "-", "-", "-", "-", "-"],
-         ["-", "-", "-", "-", "-", "-", "-", "-"],
-         ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"],
-         ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"]]
 legalMoves = []
-turn = True
 
 
 def move(userMove):
     """
     This checks if the move is a legal move and returns the board state if it is legal.
     :param: userMove : This is the move that needs to be checked.
-    :return: This returns the board state if the move is legal.
+    :return: None
     """
-    global turn
-    global board
     checkLegalMoves()
     userMove = json.loads(userMove)
     if "".join(str(i) for i in userMove) in legalMoves:
-        board[userMove[2]][userMove[3]] = board[userMove[0]][userMove[1]]
-        board[userMove[0]][userMove[1]] = "-"
+        ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
+        ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
         legalMoves.clear()
-        turn = not turn
-    return json.dumps(board)
+        ChessCommonVariables.TURN = not ChessCommonVariables.TURN
 
 
 def checkLegalMoves():
@@ -41,31 +30,31 @@ def checkLegalMoves():
     """
     for r in range(0, 8):
         for c in range(0, 8):
-            if board[r][c] == "-":
+            if ChessCommonVariables.BOARD[r][c] == "-":
                 pass
-            elif board[r][c][0] == "w" and turn:
-                if board[r][c][1] == "P":
+            elif ChessCommonVariables.BOARD[r][c][0] == "w" and ChessCommonVariables.TURN:
+                if ChessCommonVariables.BOARD[r][c][1] == "P":
                     checkPawn(r, c, "w")
-                elif board[r][c][1] == "R":
+                elif ChessCommonVariables.BOARD[r][c][1] == "R":
                     checkRook(r, c, "w")
-                elif board[r][c][1] == "B":
+                elif ChessCommonVariables.BOARD[r][c][1] == "B":
                     checkBishop(r, c, "w")
-                elif board[r][c][1] == "Q":
+                elif ChessCommonVariables.BOARD[r][c][1] == "Q":
                     checkQueen(r, c, "w")
-                elif board[r][c][1] == "K":
+                elif ChessCommonVariables.BOARD[r][c][1] == "K":
                     checkKing(r, c, "w")
                 else:
                     checkKnight(r, c, "w")
-            elif board[r][c][0] == "b" and not turn:
-                if board[r][c][1] == "P":
+            elif ChessCommonVariables.BOARD[r][c][0] == "b" and not ChessCommonVariables.TURN:
+                if ChessCommonVariables.BOARD[r][c][1] == "P":
                     checkPawn(r, c, "b")
-                elif board[r][c][1] == "R":
+                elif ChessCommonVariables.BOARD[r][c][1] == "R":
                     checkRook(r, c, "b")
-                elif board[r][c][1] == "B":
+                elif ChessCommonVariables.BOARD[r][c][1] == "B":
                     checkBishop(r, c, "b")
-                elif board[r][c][1] == "Q":
+                elif ChessCommonVariables.BOARD[r][c][1] == "Q":
                     checkQueen(r, c, "b")
-                elif board[r][c][1] == "K":
+                elif ChessCommonVariables.BOARD[r][c][1] == "K":
                     checkKing(r, c, "b")
                 else:
                     checkKnight(r, c, "b")
@@ -80,24 +69,24 @@ def checkPawn(r, c, color):
     :return: None
     """
     if color == "w":
-        if r == 6 and board[r - 2][c] == "-" and board[r - 1][c] == "-":
+        if r == 6 and ChessCommonVariables.BOARD[r - 2][c] == "-" and ChessCommonVariables.BOARD[r - 1][c] == "-":
             legalMoves.append(f"{r}{c}{r - 2}{c}")
         if r - 1 >= 0:
-            if board[r - 1][c] == "-":
+            if ChessCommonVariables.BOARD[r - 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r - 1}{c}")
-            if c - 1 >= 0 and board[r - 1][c - 1][0] == "b":
+            if c - 1 >= 0 and ChessCommonVariables.BOARD[r - 1][c - 1][0] == "b":
                 legalMoves.append(f"{r}{c}{r - 1}{c - 1}")
-            if c + 1 <= 7 and board[r - 1][c + 1][0] == "b":
+            if c + 1 <= 7 and ChessCommonVariables.BOARD[r - 1][c + 1][0] == "b":
                 legalMoves.append(f"{r}{c}{r - 1}{c + 1}")
     if color == "b":
-        if r == 1 and board[r + 2][c] == "-" and board[r + 1][c] == "-":
+        if r == 1 and ChessCommonVariables.BOARD[r + 2][c] == "-" and ChessCommonVariables.BOARD[r + 1][c] == "-":
             legalMoves.append(f"{r}{c}{r + 2}{c}")
         if r + 1 <= 7:
-            if board[r + 1][c] == "-":
+            if ChessCommonVariables.BOARD[r + 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r + 1}{c}")
-            if c - 1 >= 0 and board[r + 1][c - 1][0] == "w":
+            if c - 1 >= 0 and ChessCommonVariables.BOARD[r + 1][c - 1][0] == "w":
                 legalMoves.append(f"{r}{c}{r + 1}{c - 1}")
-            if c + 1 <= 7 and board[r + 1][c + 1][0] == "w":
+            if c + 1 <= 7 and ChessCommonVariables.BOARD[r + 1][c + 1][0] == "w":
                 legalMoves.append(f"{r}{c}{r + 1}{c + 1}")
 
 
@@ -112,36 +101,36 @@ def checkRook(r, c, color):
     row = r
     while row > 0:
         row -= 1
-        if board[row][c][0] != color:
+        if ChessCommonVariables.BOARD[row][c][0] != color:
             legalMoves.append(f"{r}{c}{row}{c}")
-            if board[row][c] != "-":
+            if ChessCommonVariables.BOARD[row][c] != "-":
                 break
         else:
             break
     row = r
     while row < 7:
         row += 1
-        if board[row][c][0] != color:
+        if ChessCommonVariables.BOARD[row][c][0] != color:
             legalMoves.append(f"{r}{c}{row}{c}")
-            if board[row][c] != "-":
+            if ChessCommonVariables.BOARD[row][c] != "-":
                 break
         else:
             break
     col = c
     while col > 0:
         col -= 1
-        if board[r][col][0] != color:
+        if ChessCommonVariables.BOARD[r][col][0] != color:
             legalMoves.append(f"{r}{c}{r}{col}")
-            if board[r][col] != "-":
+            if ChessCommonVariables.BOARD[r][col] != "-":
                 break
         else:
             break
     col = c
     while col < 7:
         col += 1
-        if board[r][col][0] != color:
+        if ChessCommonVariables.BOARD[r][col][0] != color:
             legalMoves.append(f"{r}{c}{r}{col}")
-            if board[r][col] != "-":
+            if ChessCommonVariables.BOARD[r][col] != "-":
                 break
         else:
             break
@@ -160,9 +149,9 @@ def checkBishop(r, c, color):
     while row > 0 and col > 0:
         row -= 1
         col -= 1
-        if board[row][col][0] != color:
+        if ChessCommonVariables.BOARD[row][col][0] != color:
             legalMoves.append(f"{r}{c}{row}{col}")
-            if board[row][col] != "-":
+            if ChessCommonVariables.BOARD[row][col] != "-":
                 break
         else:
             break
@@ -171,9 +160,9 @@ def checkBishop(r, c, color):
     while row > 0 and col < 7:
         row -= 1
         col += 1
-        if board[row][col][0] != color:
+        if ChessCommonVariables.BOARD[row][col][0] != color:
             legalMoves.append(f"{r}{c}{row}{col}")
-            if board[row][col] != "-":
+            if ChessCommonVariables.BOARD[row][col] != "-":
                 break
         else:
             break
@@ -182,9 +171,9 @@ def checkBishop(r, c, color):
     while row < 7 and col > 0:
         row += 1
         col -= 1
-        if board[row][col][0] != color:
+        if ChessCommonVariables.BOARD[row][col][0] != color:
             legalMoves.append(f"{r}{c}{row}{col}")
-            if board[row][col] != "-":
+            if ChessCommonVariables.BOARD[row][col] != "-":
                 break
         else:
             break
@@ -193,9 +182,9 @@ def checkBishop(r, c, color):
     while row < 7 and col < 7:
         row += 1
         col += 1
-        if board[row][col][0] != color:
+        if ChessCommonVariables.BOARD[row][col][0] != color:
             legalMoves.append(f"{r}{c}{row}{col}")
-            if board[row][col] != "-":
+            if ChessCommonVariables.BOARD[row][col] != "-":
                 break
         else:
             break
@@ -233,24 +222,24 @@ def checkKnight(r, c, color):
     :return: None
     """
     if r - 2 >= 0:
-        if c - 1 >= 0 and board[r - 2][c - 1][0] != color:
+        if c - 1 >= 0 and ChessCommonVariables.BOARD[r - 2][c - 1][0] != color:
             legalMoves.append(f"{r}{c}{r - 2}{c - 1}")
-        if c + 1 <= 7 and board[r - 2][c + 1][0] != color:
+        if c + 1 <= 7 and ChessCommonVariables.BOARD[r - 2][c + 1][0] != color:
             legalMoves.append(f"{r}{c}{r - 2}{c + 1}")
     if r + 2 <= 7:
-        if c - 1 >= 0 and board[r + 2][c - 1][0] != color:
+        if c - 1 >= 0 and ChessCommonVariables.BOARD[r + 2][c - 1][0] != color:
             legalMoves.append(f"{r}{c}{r + 2}{c - 1}")
-        if c + 1 <= 7 and board[r + 2][c + 1][0] != color:
+        if c + 1 <= 7 and ChessCommonVariables.BOARD[r + 2][c + 1][0] != color:
             legalMoves.append(f"{r}{c}{r + 2}{c + 1}")
     if c - 2 >= 0:
-        if r - 1 >= 0 and board[r - 1][c - 2][0] != color:
+        if r - 1 >= 0 and ChessCommonVariables.BOARD[r - 1][c - 2][0] != color:
             legalMoves.append(f"{r}{c}{r - 1}{c - 2}")
-        if r + 1 <= 7 and board[r + 1][c - 2][0] != color:
+        if r + 1 <= 7 and ChessCommonVariables.BOARD[r + 1][c - 2][0] != color:
             legalMoves.append(f"{r}{c}{r + 1}{c - 2}")
     if c + 2 <= 7:
-        if r - 1 >= 0 and board[r - 1][c + 2][0] != color:
+        if r - 1 >= 0 and ChessCommonVariables.BOARD[r - 1][c + 2][0] != color:
             legalMoves.append(f"{r}{c}{r - 1}{c + 2}")
-        if r + 1 <= 7 and board[r + 1][c + 2][0] != color:
+        if r + 1 <= 7 and ChessCommonVariables.BOARD[r + 1][c + 2][0] != color:
             legalMoves.append(f"{r}{c}{r + 1}{c + 2}")
 
 

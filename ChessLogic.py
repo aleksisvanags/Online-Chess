@@ -71,7 +71,6 @@ def checkLegalMoves():
                     checkKnight(r, c, "b")
 
 
-
 def checkPawn(r, c, color):
     """
     This generates all of the legal pawn moves and appends them to a list.
@@ -101,7 +100,6 @@ def checkPawn(r, c, color):
             if c + 1 <= 7 and board[r + 1][c + 1][0] == "w":
                 legalMoves.append(f"{r}{c}{r + 1}{c + 1}")
         
-
 
 def checkRook(r, c, color):
     """

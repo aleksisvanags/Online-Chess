@@ -43,8 +43,8 @@ def handle_client(conn, addr):
         except ConnectionResetError:
             print(f"[{addr}] Disconnected")
             break
-    for conn in connections:
-        conn.close()
+    for connection in connections:
+        connection.close()
         connections.remove(conn)
 
 

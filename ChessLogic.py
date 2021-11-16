@@ -225,7 +225,6 @@ def checkKing(r, c, color):
     :param: color : This is the color of the piece that is currently being checked.
     :return: None
     """
-    pass
     # Create Logic for this
 
 
@@ -275,7 +274,6 @@ def checkProtected(r, c, color):
     :param: color : This is the color of the piece that is currently being checked.
     :return: None
     """
-    pass
     # Rook/Queen Check
     # Bishop/Queen Check
     # Pawn Check

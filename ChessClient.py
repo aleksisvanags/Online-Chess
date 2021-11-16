@@ -31,16 +31,16 @@ def main():
     :return: None
     """
     pygame.init()
-    
+
     SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
     CLOCK = pygame.time.Clock()
     SCREEN.fill((255, 255, 255))
-    
+
     loadImages()
 
     running = True
     firstClick = True
-    
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

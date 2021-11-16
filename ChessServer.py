@@ -9,7 +9,7 @@ import json
 import ChessLogic
 
 print("[SEVER] Server is starting...")
-    
+
 HEADER = 12
 FORMAT = "utf-8"
 PORT = 5050

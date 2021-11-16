@@ -10,7 +10,7 @@ import pygame
 FORMAT = "utf-8"
 PORT = 5050
 #Change this to the Server IP
-SERVER = "192.168.1.101"
+SERVER = "11.9.8.149"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -87,6 +87,7 @@ def drawPieces(screen):
 
 
 def send(msg):
+    print("Sedning")
     client.send(msg.encode(FORMAT))
 
 

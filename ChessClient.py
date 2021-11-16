@@ -26,6 +26,10 @@ board = []
 
 
 def main():
+    """
+    Starts the program when run directly.
+    :return: None
+    """
     pygame.init()
     
     SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -60,17 +64,31 @@ def main():
 
 
 def loadImages():
+    """
+    Loads the required images into a dictionary when called.
+    :return: None
+    """
     pieces = ["wP", "wR", "wB", "wQ", "wN", "wK", "bP", "bR", "bB", "bQ", "bN", "bK"]
     for piece in pieces:
         IMAGES[piece] = pygame.transform.scale(pygame.image.load(piece + ".png"), (SQUARE_SIZE, SQUARE_SIZE))
 
 
 def updateBoard(screen):
+    """
+    This calls the functions that draw the board and the pieces.
+    :param: screen : This is the object the the GUI is running on.
+    :return: None
+    """
     drawBoard(screen)
     drawPieces(screen)
 
 
 def drawBoard(screen):
+    """
+    This draws the baord every time it is called.
+    :param: screen : This is the object the the GUI is running on.
+    :return: None
+    """
     colors = [pygame.Color("white"), pygame.Color("grey")]
     for r in range(8):
         for c in range(8):
@@ -79,6 +97,11 @@ def drawBoard(screen):
 
 
 def drawPieces(screen):
+    """
+    This draws the pieces onto the board every time it is called.
+    :param: screen : This is the object the the GUI is running on.
+    :return: None
+    """
     for r in range(8):
         for c in range(8):
             piece = board[r][c]
@@ -87,11 +110,19 @@ def drawPieces(screen):
 
 
 def send(msg):
-    print("Sedning")
+    """
+    This sends a message to the server.
+    :param: msg : This is the message that needs to be sent.
+    :return: None
+    """
     client.send(msg.encode(FORMAT))
 
 
 def recieve_board():
+    """
+    This recieves the current board state from the server.
+    :return: None
+    """
     while True:
         global board
         msg = client.recv(368).decode(FORMAT)

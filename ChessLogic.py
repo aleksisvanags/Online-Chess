@@ -17,6 +17,11 @@ turn = True
 
 
 def move(userMove):
+    """
+    This checks if the move is a legal move and returns the board state if it is legal.
+    :param: userMove : This is the move that needs to be checked.
+    :return: This returns the board state if the move is legal.
+    """
     global turn
     global board
     checkLegalMoves()
@@ -30,6 +35,10 @@ def move(userMove):
 
 
 def checkLegalMoves():
+    """
+    This generates all of the legal moves and stores them in a list.
+    :return: None
+    """
     for r in range(0, 8):
         for c in range(0, 8):
             if board[r][c] == "-":
@@ -64,6 +73,13 @@ def checkLegalMoves():
 
 
 def checkPawn(r, c, color):
+    """
+    This generates all of the legal pawn moves and appends them to a list.
+    :param: r : This is the row of the board.
+    :param: c : This is the column of the board.
+    :param: color : This is the color of the piece that is currently being checked.
+    :return: None
+    """
     if color == "w":
         if r == 6:
             if board[r - 2][c] == "-" and board[r - 1][c] == "-":
@@ -90,6 +106,13 @@ def checkPawn(r, c, color):
 
 
 def checkRook(r, c, color):
+    """
+    This generates all of the legal rook moves and appends them to a list.
+    :param: r : This is the row of the board.
+    :param: c : This is the column of the board.
+    :param: color : This is the color of the piece that is currently being checked.
+    :return: None
+    """
     row = r
     while row > 0:
         row -= 1
@@ -129,6 +152,13 @@ def checkRook(r, c, color):
 
 
 def checkBishop(r, c, color):
+    """
+    This generates all of the legal bishop moves and appends them to a list.
+    :param: r : This is the row of the board.
+    :param: c : This is the column of the board.
+    :param: color : This is the color of the piece that is currently being checked.
+    :return: None
+    """
     row = r
     col = c
     while row > 0 and col > 0:
@@ -176,16 +206,37 @@ def checkBishop(r, c, color):
 
 
 def checkQueen(r, c, color):
+    """
+    This generates all of the legal queen moves and appends them to a list.
+    :param: r : This is the row of the board.
+    :param: c : This is the column of the board.
+    :param: color : This is the color of the piece that is currently being checked.
+    :return: None
+    """
     checkRook(r, c, color)
     checkBishop(r, c, color)
 
 
 def checkKing(r, c, color):
+    """
+    This generates all of the legal king moves and appends them to a list.
+    :param: r : This is the row of the board.
+    :param: c : This is the column of the board.
+    :param: color : This is the color of the piece that is currently being checked.
+    :return: None
+    """
     pass
     # Create Logic for this
 
 
 def checkKnight(r, c, color):
+    """
+    This generates all of the legal knight moves and appends them to a list.
+    :param: r : This is the row of the board.
+    :param: c : This is the column of the board.
+    :param: color : This is the color of the piece that is currently being checked.
+    :return: None
+    """
     if r - 2 >= 0:
         if c - 1 >= 0:
             if board[r - 2][c - 1][0] != color:
@@ -217,11 +268,16 @@ def checkKnight(r, c, color):
 
 
 def checkProtected(r, c, color):
+    """
+    This checks if a square is attcked by an enemy piece.
+    :param: r : This is the row of the board.
+    :param: c : This is the column of the board.
+    :param: color : This is the color of the piece that is currently being checked.
+    :return: None
+    """
     pass
     # Rook/Queen Check
     # Bishop/Queen Check
     # Pawn Check
     # Knight Check
     # King Check
-
-

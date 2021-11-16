@@ -23,6 +23,12 @@ connections = []
 
 
 def handle_client(conn, addr):
+    """
+    This function recieves and interprets incoming messages.
+    :param: conn : connection name
+    :param: addr : connection address
+    :return: None
+    """
     print(f"[NEW CONNECTION] {addr} connected.")
     connections.append(conn)
     conn.send(json.dumps(ChessLogic.board).encode(FORMAT))
@@ -45,6 +51,10 @@ def handle_client(conn, addr):
 
 
 def start():
+    """
+    Starts a new thread every time there is a new incoming request.
+    :return: None
+    """
     server.listen()
     print(f"[LISTENING] Server is listening on {SERVER}")
     while True:

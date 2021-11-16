@@ -81,9 +81,8 @@ def checkPawn(r, c, color):
     :return: None
     """
     if color == "w":
-        if r == 6:
-            if board[r - 2][c] == "-" and board[r - 1][c] == "-":
-                legalMoves.append(f"{r}{c}{r - 2}{c}")
+        if r == 6 and board[r - 2][c] == "-" and board[r - 1][c] == "-":
+            legalMoves.append(f"{r}{c}{r - 2}{c}")
         if r - 1 >= 0:
             if board[r - 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r - 1}{c}")
@@ -92,9 +91,8 @@ def checkPawn(r, c, color):
             if c + 1 <= 7 and board[r - 1][c + 1][0] == "b":
                 legalMoves.append(f"{r}{c}{r - 1}{c + 1}")
     if color == "b":
-        if r == 1:
-            if board[r + 2][c] == "-" and board[r + 1][c] == "-":
-                legalMoves.append(f"{r}{c}{r + 2}{c}")
+        if r == 1 and board[r + 2][c] == "-" and board[r + 1][c] == "-":
+            legalMoves.append(f"{r}{c}{r + 2}{c}")
         if r + 1 <= 7:
             if board[r + 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r + 1}{c}")
@@ -237,33 +235,25 @@ def checkKnight(r, c, color):
     :return: None
     """
     if r - 2 >= 0:
-        if c - 1 >= 0:
-            if board[r - 2][c - 1][0] != color:
-                legalMoves.append(f"{r}{c}{r - 2}{c - 1}")
-        if c + 1 <= 7:
-            if board[r - 2][c + 1][0] != color:
-                legalMoves.append(f"{r}{c}{r - 2}{c + 1}")
+        if c - 1 >= 0 and board[r - 2][c - 1][0] != color:
+            legalMoves.append(f"{r}{c}{r - 2}{c - 1}")
+        if c + 1 <= 7 and board[r - 2][c + 1][0] != color:
+            legalMoves.append(f"{r}{c}{r - 2}{c + 1}")
     if r + 2 <= 7:
-        if c - 1 >= 0:
-            if board[r + 2][c - 1][0] != color:
-                legalMoves.append(f"{r}{c}{r + 2}{c - 1}")
-        if c + 1 <= 7:
-            if board[r + 2][c + 1][0] != color:
-                legalMoves.append(f"{r}{c}{r + 2}{c + 1}")
+        if c - 1 >= 0 and board[r + 2][c - 1][0] != color:
+            legalMoves.append(f"{r}{c}{r + 2}{c - 1}")
+        if c + 1 <= 7 and board[r + 2][c + 1][0] != color:
+            legalMoves.append(f"{r}{c}{r + 2}{c + 1}")
     if c - 2 >= 0:
-        if r - 1 >= 0:
-            if board[r - 1][c - 2][0] != color:
-                legalMoves.append(f"{r}{c}{r - 1}{c - 2}")
-        if r + 1 <= 7:
-            if board[r + 1][c - 2][0] != color:
-                legalMoves.append(f"{r}{c}{r + 1}{c - 2}")
+        if r - 1 >= 0 and board[r - 1][c - 2][0] != color:
+            legalMoves.append(f"{r}{c}{r - 1}{c - 2}")
+        if r + 1 <= 7 and board[r + 1][c - 2][0] != color:
+            legalMoves.append(f"{r}{c}{r + 1}{c - 2}")
     if c + 2 <= 7:
-        if r - 1 >= 0:
-            if board[r - 1][c + 2][0] != color:
-                legalMoves.append(f"{r}{c}{r - 1}{c + 2}")
-        if r + 1 <= 7:
-            if board[r + 1][c + 2][0] != color:
-                legalMoves.append(f"{r}{c}{r + 1}{c + 2}")
+        if r - 1 >= 0 and board[r - 1][c + 2][0] != color:
+            legalMoves.append(f"{r}{c}{r - 1}{c + 2}")
+        if r + 1 <= 7 and board[r + 1][c + 2][0] != color:
+            legalMoves.append(f"{r}{c}{r + 1}{c + 2}")
 
 
 def checkProtected(r, c, color):

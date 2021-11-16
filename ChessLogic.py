@@ -71,6 +71,7 @@ def checkPawn(r, c, color):
     if color == "w":
         if r == 6 and ChessCommonVariables.BOARD[r - 2][c] == "-" and ChessCommonVariables.BOARD[r - 1][c] == "-":
             legalMoves.append(f"{r}{c}{r - 2}{c}")
+            ChessCommonVariables.EN_PASSANT = True
         if r - 1 >= 0:
             if ChessCommonVariables.BOARD[r - 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r - 1}{c}")
@@ -81,6 +82,7 @@ def checkPawn(r, c, color):
     if color == "b":
         if r == 1 and ChessCommonVariables.BOARD[r + 2][c] == "-" and ChessCommonVariables.BOARD[r + 1][c] == "-":
             legalMoves.append(f"{r}{c}{r + 2}{c}")
+            ChessCommonVariables.EN_PASSANT = True
         if r + 1 <= 7:
             if ChessCommonVariables.BOARD[r + 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r + 1}{c}")

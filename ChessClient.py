@@ -10,7 +10,7 @@ import pygame
 FORMAT = "utf-8"
 PORT = 5050
 # Change this to the Server IP
-SERVER = "11.9.8.118"
+SERVER = "192.168.1.101"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

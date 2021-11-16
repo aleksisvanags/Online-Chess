@@ -36,10 +36,9 @@ def handle_client(conn, addr):
         try:
             msg = conn.recv(HEADER).decode(FORMAT)
             board = ChessLogic.move(msg)
-            if board is not None:
-                board = board.encode(FORMAT)
-                for connection in connections:
-                    connection.send(board)
+            board = board.encode(FORMAT)
+            for connection in connections:
+                connection.send(board)
         except ConnectionResetError:
             print(f"[{addr}] Disconnected")
             break

@@ -99,7 +99,7 @@ def checkPawn(r, c, color):
                 legalMoves.append(f"{r}{c}{r + 1}{c - 1}")
             if c + 1 <= 7 and board[r + 1][c + 1][0] == "w":
                 legalMoves.append(f"{r}{c}{r + 1}{c + 1}")
-        
+
 
 def checkRook(r, c, color):
     """

@@ -9,7 +9,7 @@ import pygame
 
 FORMAT = "utf-8"
 PORT = 5050
- # Change this to the Server IP
+# Change this to the Server IP
 SERVER = "11.9.8.149"
 ADDR = (SERVER, PORT)
 

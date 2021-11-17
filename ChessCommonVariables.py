@@ -11,4 +11,4 @@ BOARD = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
          ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"],
          ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"]]
 TURN = True
-EN_PASSANT = False
+EN_PASSANT, EN_PASSANT_COL = False, None

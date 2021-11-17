@@ -17,9 +17,11 @@ def move(userMove):
     checkLegalMoves()
     userMove = json.loads(userMove)
     if "".join(str(i) for i in userMove) in legalMoves:
-        ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
-        ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
-        legalMoves.clear()
+        if userMove[0] - 2 == userMove[2] or userMove[0] + 2 == userMove[2] and ChessCommonVariables.BOARD[userMove[0]][userMove[1]][1] == "P":
+            ChessCommonVariables.EN_PASSANT, ChessCommonVariables.EN_PASSANT_COL = True, userMove[3]
+        if not checkWasEnPassant(userMove):
+            ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
         ChessCommonVariables.TURN = not ChessCommonVariables.TURN
 
 
@@ -28,6 +30,7 @@ def checkLegalMoves():
     This generates all of the legal moves and stores them in a list.
     :return: None
     """
+    legalMoves.clear()
     for r in range(0, 8):
         for c in range(0, 8):
             if ChessCommonVariables.BOARD[r][c] == "-":
@@ -71,25 +74,68 @@ def checkPawn(r, c, color):
     if color == "w":
         if r == 6 and ChessCommonVariables.BOARD[r - 2][c] == "-" and ChessCommonVariables.BOARD[r - 1][c] == "-":
             legalMoves.append(f"{r}{c}{r - 2}{c}")
-            ChessCommonVariables.EN_PASSANT = True
         if r - 1 >= 0:
             if ChessCommonVariables.BOARD[r - 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r - 1}{c}")
-            if c - 1 >= 0 and ChessCommonVariables.BOARD[r - 1][c - 1][0] == "b":
-                legalMoves.append(f"{r}{c}{r - 1}{c - 1}")
-            if c + 1 <= 7 and ChessCommonVariables.BOARD[r - 1][c + 1][0] == "b":
-                legalMoves.append(f"{r}{c}{r - 1}{c + 1}")
+            if c - 1 >= 0:
+                if ChessCommonVariables.BOARD[r - 1][c - 1][0] == "b":
+                    legalMoves.append(f"{r}{c}{r - 1}{c - 1}")
+                if ChessCommonVariables.EN_PASSANT and c - 1 == ChessCommonVariables.EN_PASSANT_COL and ChessCommonVariables.BOARD[r][c - 1] == "bP":
+                    legalMoves.append(f"{r}{c}{r - 1}{c - 1}")
+                    ChessCommonVariables.EN_PASSANT = False
+            if c + 1 <= 7:
+                if ChessCommonVariables.BOARD[r - 1][c + 1][0] == "b":
+                    legalMoves.append(f"{r}{c}{r - 1}{c + 1}")
+                if ChessCommonVariables.EN_PASSANT and c + 1 == ChessCommonVariables.EN_PASSANT_COL and ChessCommonVariables.BOARD[r][c + 1] == "bP":
+                    legalMoves.append(f"{r}{c}{r - 1}{c + 1}")
+                    ChessCommonVariables.EN_PASSANT = False
     if color == "b":
         if r == 1 and ChessCommonVariables.BOARD[r + 2][c] == "-" and ChessCommonVariables.BOARD[r + 1][c] == "-":
             legalMoves.append(f"{r}{c}{r + 2}{c}")
-            ChessCommonVariables.EN_PASSANT = True
         if r + 1 <= 7:
             if ChessCommonVariables.BOARD[r + 1][c] == "-":
                 legalMoves.append(f"{r}{c}{r + 1}{c}")
-            if c - 1 >= 0 and ChessCommonVariables.BOARD[r + 1][c - 1][0] == "w":
-                legalMoves.append(f"{r}{c}{r + 1}{c - 1}")
-            if c + 1 <= 7 and ChessCommonVariables.BOARD[r + 1][c + 1][0] == "w":
-                legalMoves.append(f"{r}{c}{r + 1}{c + 1}")
+            if c - 1 >= 0:
+                if ChessCommonVariables.BOARD[r + 1][c - 1][0] == "w":
+                    legalMoves.append(f"{r}{c}{r + 1}{c - 1}")
+                if ChessCommonVariables.EN_PASSANT and c - 1 == ChessCommonVariables.EN_PASSANT_COL and ChessCommonVariables.BOARD[r][c - 1] == "wP":
+                    legalMoves.append(f"{r}{c}{r + 1}{c - 1}")
+                    ChessCommonVariables.EN_PASSANT = False
+            if c + 1 <= 7:
+                if ChessCommonVariables.BOARD[r + 1][c + 1][0] == "w":
+                    legalMoves.append(f"{r}{c}{r + 1}{c + 1}")
+                if ChessCommonVariables.EN_PASSANT and c + 1 == ChessCommonVariables.EN_PASSANT_COL and ChessCommonVariables.BOARD[r][c + 1] == "wP":
+                    legalMoves.append(f"{r}{c}{r + 1}{c + 1}")
+                    ChessCommonVariables.EN_PASSANT = False
+                    
+
+def checkWasEnPassant(userMove):
+    """
+    :param: userMove : This is the move request from the user
+    :return: bool
+    """
+    if ChessCommonVariables.BOARD[userMove[0]][userMove[1]][1] == "P" and ChessCommonVariables.BOARD[userMove[2]][userMove[3]] == "-":
+        if userMove[0] - 1 == userMove[2] and userMove[1] - 1 == userMove[3]:
+            ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1] - 1] = "-"
+            return True
+        elif userMove[0] - 1 == userMove[2] and userMove[1] + 1 == userMove[3]:
+            ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1] + 1] = "-"
+            return True
+        elif userMove[0] + 1 == userMove[2] and userMove[1] - 1 == userMove[3]:
+            ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1] - 1] = "-"
+            return True
+        elif userMove[0] + 1 == userMove[2] and userMove[1] + 1 == userMove[3]:
+            ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
+            ChessCommonVariables.BOARD[userMove[0]][userMove[1] + 1] = "-"
+            return True
+    return False
 
 
 def checkRook(r, c, color):
@@ -258,3 +304,4 @@ def checkProtected(r, c, color):
     # Pawn Check
     # Knight Check
     # King Check
+

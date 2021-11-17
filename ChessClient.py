@@ -124,7 +124,7 @@ def recieve_board():
     :return: None
     """
     while True:
-        global board
+        global board # skipcq
         msg = client.recv(368).decode(FORMAT)
         board = json.loads(msg)
 

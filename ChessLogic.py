@@ -304,4 +304,3 @@ def checkProtected(r, c, color):
     # Pawn Check
     # Knight Check
     # King Check
-

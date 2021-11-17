@@ -107,7 +107,7 @@ def checkPawn(r, c, color):
                 if ChessCommonVariables.EN_PASSANT and c + 1 == ChessCommonVariables.EN_PASSANT_COL and ChessCommonVariables.BOARD[r][c + 1] == "wP":
                     legalMoves.append(f"{r}{c}{r + 1}{c + 1}")
                     ChessCommonVariables.EN_PASSANT = False
-                    
+
 
 def checkWasEnPassant(userMove):
     """

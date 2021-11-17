@@ -120,17 +120,17 @@ def checkWasEnPassant(userMove):
             ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
             ChessCommonVariables.BOARD[userMove[0]][userMove[1] - 1] = "-"
             return True
-        elif userMove[0] - 1 == userMove[2] and userMove[1] + 1 == userMove[3]:
+        if userMove[0] - 1 == userMove[2] and userMove[1] + 1 == userMove[3]:
             ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
             ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
             ChessCommonVariables.BOARD[userMove[0]][userMove[1] + 1] = "-"
             return True
-        elif userMove[0] + 1 == userMove[2] and userMove[1] - 1 == userMove[3]:
+        if userMove[0] + 1 == userMove[2] and userMove[1] - 1 == userMove[3]:
             ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
             ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
             ChessCommonVariables.BOARD[userMove[0]][userMove[1] - 1] = "-"
             return True
-        elif userMove[0] + 1 == userMove[2] and userMove[1] + 1 == userMove[3]:
+        if userMove[0] + 1 == userMove[2] and userMove[1] + 1 == userMove[3]:
             ChessCommonVariables.BOARD[userMove[2]][userMove[3]] = ChessCommonVariables.BOARD[userMove[0]][userMove[1]]
             ChessCommonVariables.BOARD[userMove[0]][userMove[1]] = "-"
             ChessCommonVariables.BOARD[userMove[0]][userMove[1] + 1] = "-"
